@@ -5,7 +5,7 @@
 [![React Native](https://img.shields.io/badge/React%20Native-Expo-000020?style=for-the-badge&logo=expo&logoColor=white)](https://expo.dev)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 
-> **Submission for Gemma 4 Good Hackathon (May 2026) — Health & Sciences + Ollama Local Ops + LiteRT AI Edge + Cactus Mobile tracks**
+**Submission for Gemma 4 Good Hackathon (May 2026) — Health & Sciences + Ollama Local Ops + LiteRT AI Edge + Cactus Mobile tracks**
 
 ---
 
@@ -351,9 +351,8 @@ sehatgemma/
 ---
 
 ## 🤝 Team
-
-**Nouman** — Founder, AGENATION.IO  
-Solo founder. Cybersecurity + AI background.
+ 👤 **Developer:** Noman — Solo builder, Pakistan
+     Cybersecurity + AI background.
 
 ---
 
