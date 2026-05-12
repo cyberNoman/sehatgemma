@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "SehatGemma",
+    "slug": "sehatgemma",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "sdkVersion": "54.0.0",
+    "platforms": ["ios", "android", "web"],
+    "newArchEnabled": false,
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow SehatGemma to access your camera to take food photos."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow SehatGemma to access your photos to analyze food images.",
+          "cameraPermission": "Allow SehatGemma to access your camera to take food photos."
+        }
+      ]
+    ]
+  }
+}
