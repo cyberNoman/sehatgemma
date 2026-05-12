@@ -217,7 +217,7 @@
 - Look directly into camera
 - Speak slowly on the last line
 - Don't smile on the last line — it's a serious mission statement
-- Add a title card at the end: "SehatGemma • صحت جیما • github.com/YOUR_USERNAME/sehatgemma"
+- Add a title card at the end: "SehatGemma • صحت جیما • github.com/cyberNoman/sehatgemma"
 
 ---
 
@@ -282,7 +282,7 @@ No internet. No cloud. No API bills. Just a phone and a $75 Raspberry Pi running
 
 101 Pakistani foods pre-loaded. Urdu + English. Works on $50 phones.
 
-🔗 GitHub: https://github.com/YOUR_USERNAME/sehatgemma
+🔗 GitHub: https://github.com/cyberNoman/sehatgemma
 🏆 Gemma 4 Good Hackathon — May 2026
 #Gemma4Good #Gemma4 #Ollama #Diabetes #Pakistan #HealthTech
 ```
