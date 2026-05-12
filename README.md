@@ -165,7 +165,7 @@ async def analyze(file: UploadFile, text: str, language: str):
 curl -fsSL https://ollama.com/install.sh | sh
 ollama pull gemma4:2b
 
-git clone https://github.com/YOUR_USERNAME/sehatgemma.git
+git clone https://github.com/cyberNoman/sehatgemma.git
 cd sehatgemma/backend
 pip install fastapi uvicorn httpx python-multipart
 uvicorn main:app --host 0.0.0.0 --port 8001
