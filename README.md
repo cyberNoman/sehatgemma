@@ -9,8 +9,17 @@
 
 ---
 
-> *"My father has Type 2 diabetes. At every family gathering, I watched him stare at the biryani and guess — is this safe? He was always wrong. SehatGemma was built so he, and Pakistan's 33 million diabetics, never have to guess again."*
-> — **Nouman Riaz, Builder**
+> ## 💔 Why I Built This
+>
+> In 2023, I was a Master's student in the UK when my father was diagnosed with a bone infection in his foot — a direct complication of uncontrolled diabetes. The doctors in London told us the infection could spread. We almost lost him.
+>
+> Every day from my student room, I was Googling: *"how many carbs in biryani," "is roti safe for diabetics," "daily sugar limit for Type 2."* I was manually tracking everything for him — food, glucose readings, what he could and couldn't eat.
+>
+> There was no app that understood Pakistani food. No tool that worked offline. Nothing in Urdu. Nothing built for someone like my father.
+>
+> So I built it. **SehatGemma** — so no family has to go through what mine did. So Pakistan's 33 million diabetics can point their phone at any food and instantly know if it's safe.
+>
+> — **Nouman Riaz**, MSc Cybersecurity · Builder · Son
 
 ---
 
@@ -74,7 +83,7 @@
 |------|-----------|--------|-------|----------|
 | **Tier 1** | Phone alone, no server | SQLite database (102 foods) | <100ms | $50 phone |
 | **Tier 2** | Phone + laptop WiFi | Ollama Gemma4:e2b (7.2GB) | 3-8 sec | Any laptop |
-| **Tier 3** | Phone + Pi hotspot | Ollama Gemma4:2b (1.3B) | 3-5 sec | Raspberry Pi 4 ($75) |
+| **Tier 3** | Phone + Pi hotspot | Ollama Gemma4:2b (1.3B) | 3-5 sec | Raspberry Pi 4 ($75) — target deployment |
 
 **Tier 1 always runs first.** If the food is in the offline database, the user gets an answer in <100ms. If unknown, Tier 2/3 is tried silently in the background.
 
@@ -219,21 +228,21 @@ Each food entry includes: risk level, glycemic index, bilingual explanation (EN 
 | Phone → Backend (WiFi LAN) — 200 OK from phone IP | ✅ |
 | Offline DB — known food instant result | ✅ |
 | TTS — results read aloud in English + Urdu | ✅ |
-| Voice input → chip → auto-analyze in 300ms | ✅ |
-| WhatsApp share — bilingual health card | ✅ |
+| Voice input — chips + keyboard mic (native STT in dev build) | ✅ |
+| System share — bilingual health card to any app | ✅ |
 | Language toggle — English ↔ Urdu all screens | ✅ |
 
 ---
 
-## 🏆 Hackathon Prize Tracks
+## 🎯 Prize Track Alignment
 
-| Track | Prize | Why |
-|-------|-------|-----|
-| **Main Track** | $50,000 | Real problem · real demo · real 33M person impact |
-| **Health & Sciences** | $10,000 | Frontline diabetic health tool, PROMPT clinical guidelines |
-| **Ollama Local Ops** | $10,000 | Built entirely on Ollama + Gemma 4 local deployment |
-| **LiteRT AI Edge** | $10,000 | Edge-first, true offline, $75 Pi 4 deployment |
-| **Cactus Mobile** | $10,000 | React Native + Expo, APK built and tested |
+| Track | How SehatGemma Qualifies |
+|-------|--------------------------|
+| **Main Track** | Working demo for 33M+ Pakistani diabetics · real clinical data · personal story behind the build |
+| **Health & Sciences** | Follows Pakistan PROMPT national guidelines · bilingual Urdu/English medical output · diabetes complications data |
+| **Ollama Local Ops** | 100% local inference via Ollama + Gemma 4 · zero cloud calls · keep_alive warmup · persistent httpx client |
+| **LiteRT AI Edge** | Edge-first offline architecture · deployable on $75 Raspberry Pi 4 · 102-food SQLite fallback (200KB) |
+| **Cactus Mobile** | React Native + Expo SDK 54 · APK built and tested on physical Android device |
 
 ---
 
@@ -285,16 +294,10 @@ sehatgemma/
 
 ---
 
-<<<<<<< HEAD
-## 🤝 Team
- 👤 **Developer:** Noman — Solo builder, Pakistan
-     Cybersecurity + AI background.
-=======
 ## 🤝 Builder
 
 **Nouman Riaz** — MSc Cybersecurity · Founder, AGENATION.IO · Pakistan  
 Solo build. Father has Type 2 diabetes. This project is personal.
->>>>>>> e808b43 (docs: personal story, 12 screens, new features, voice/chat/menu scanner, 102 foods)
 
 ---
 
@@ -313,8 +316,4 @@ MIT — Free for clinics, hospitals, NGOs, and personal use.
 
 ---
 
-<<<<<<< HEAD
 *Built with ❤️ for Pakistan. Because 33 million diabetics deserve to know what they're eating — with or without internet.*
-=======
-*Built for Pakistan. Because 33 million diabetics deserve to know what they're eating — with or without internet.*
->>>>>>> e808b43 (docs: personal story, 12 screens, new features, voice/chat/menu scanner, 102 foods)
