@@ -83,7 +83,7 @@
 |------|-----------|--------|-------|----------|
 | **Tier 1** | Phone alone, no server | SQLite database (102 foods) | <100ms | $50 phone |
 | **Tier 2** | Phone + laptop WiFi | Ollama Gemma4:e2b (7.2GB) | 3-8 sec | Any laptop |
-| **Tier 3** | Phone + Pi hotspot | Ollama Gemma4:2b (1.3B) | 3-5 sec | Raspberry Pi 4 ($75) — target deployment |
+| **Tier 3 (planned)** | Phone + Pi hotspot | Ollama Gemma4:2b (1.3B) | 3-5 sec | Raspberry Pi 4 ($75) — next deployment target |
 
 **Tier 1 always runs first.** If the food is in the offline database, the user gets an answer in <100ms. If unknown, Tier 2/3 is tried silently in the background.
 
