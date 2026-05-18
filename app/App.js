@@ -10,7 +10,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { offlineDB } from './offlineDatabase';
 import * as Speech from 'expo-speech';
-import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
+// expo-speech-recognition requires native build — disabled for Expo Go compatibility
+// import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
 
 const { width } = Dimensions.get('window');
 
@@ -1699,7 +1700,7 @@ function VoiceScreen({ voiceText, setVoiceText, isListening, setIsListening, voi
     'Diet plan chahiye',
   ];
 
-  const speechAvailable = !!ExpoSpeechRecognitionModule && typeof ExpoSpeechRecognitionModule.start === 'function';
+  const speechAvailable = false; // native STT disabled in Expo Go build
 
   useEffect(() => {
     const a1 = Animated.loop(
@@ -1722,65 +1723,16 @@ function VoiceScreen({ voiceText, setVoiceText, isListening, setIsListening, voi
     return () => { a1.stop(); a2.stop(); };
   }, [isListening]);
 
-  // Wire up expo-speech-recognition listeners
-  useEffect(() => {
-    if (!speechAvailable) return;
-    const resultSub = ExpoSpeechRecognitionModule.addListener('result', (evt) => {
-      const transcript = evt.results.map(r => r.transcript).join(' ');
-      if (transcript) setVoiceText(prev => prev ? prev + ' ' + transcript : transcript);
-    });
-    const errorSub = ExpoSpeechRecognitionModule.addListener('error', (evt) => {
-      setSpeechError(evt.message || 'Speech error');
-      setIsListening(false);
-    });
-    const endSub = ExpoSpeechRecognitionModule.addListener('end', () => {
-      setIsListening(false);
-    });
-    return () => {
-      resultSub.remove();
-      errorSub.remove();
-      endSub.remove();
-    };
-  }, [speechAvailable]);
-
   const toggleListening = async () => {
     setSpeechError('');
     if (isListening) {
       setIsListening(false);
-      if (speechAvailable) {
-        try { ExpoSpeechRecognitionModule.stop(); } catch (e) {}
-      }
-      Speech.stop();
+      try { Speech.stop(); } catch (e) {}
       return;
     }
-
-    if (speechAvailable) {
-      try {
-        const perms = await ExpoSpeechRecognitionModule.getPermissionsAsync();
-        if (!perms.granted) {
-          const req = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
-          if (!req.granted) {
-            Alert.alert('Microphone permission required', 'Please allow microphone access in Settings to use voice input.');
-            return;
-          }
-        }
-        setIsListening(true);
-        setVoiceText('');
-        ExpoSpeechRecognitionModule.start({
-          lang: language === 'ur' ? 'ur-PK' : 'en-US',
-          interimResults: true,
-          maxAlternatives: 1,
-        });
-      } catch (e) {
-        // Fallback to keyboard mic if native module fails (e.g. Expo Go)
-        setIsListening(true);
-        setTimeout(() => { if (inputRef.current) inputRef.current.focus(); }, 150);
-      }
-    } else {
-      // No native module — use keyboard mic
-      setIsListening(true);
-      setTimeout(() => { if (inputRef.current) inputRef.current.focus(); }, 150);
-    }
+    // Keyboard mic fallback (works in Expo Go and APK)
+    setIsListening(true);
+    setTimeout(() => { if (inputRef.current) inputRef.current.focus(); }, 150);
   };
 
   return (
