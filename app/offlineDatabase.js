@@ -1618,6 +1618,24 @@ const PAKISTANI_FOODS = [
     carbs_g: 4,
     calories_estimate: '~20 kcal',
     category: 'vegetables'
+  },
+  {
+    name: 'cake',
+    aliases: ['cake', 'birthday cake', 'cupcake', 'bakery', 'pastry', 'kek', 'کیک',
+              'chocolate cake', 'cream cake', 'wedding cake', 'swiss roll', 'muffin',
+              'brownie', 'black forest', 'vanilla cake', 'fruit cake'],
+    risk_level: 'high',
+    glycemic_index: 82,
+    food_name_en: 'Cake / Pastry',
+    food_name_ur: 'کیک / پیسٹری',
+    explanation_en: 'Refined flour + sugar + butter. One slice = 50-60g carbs + 30g sugar. Rapid glucose spike within 15-20 minutes. Extremely high glycemic load.',
+    explanation_ur: 'کیک میں 50+ گرام چینی ہے — شوگر کے مریضوں کے لیے نقصاندہ۔ ایک ٹکڑے میں 30 گرام چینی، 15-20 منٹ میں شوگر بڑھ جاتی ہے۔',
+    swap_suggestion_en: '1-2 dates or fresh fruit salad. If unavoidable at celebrations, 1 small bite only.',
+    swap_suggestion_ur: '1-2 کھجور یا پھل بہتر ہے۔ مجبوری ہو تو ایک چھوٹا ٹکڑا کافی ہے۔',
+    portion_advice: 'ZERO for diabetics. 1 small bite maximum if unavoidable at celebrations.',
+    carbs_g: 52,
+    calories_estimate: '~350 kcal',
+    category: 'dessert'
   }
 ];
 

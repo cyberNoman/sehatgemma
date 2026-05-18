@@ -6,8 +6,11 @@
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "sdkVersion": "54.0.0",
-    "platforms": ["ios", "android", "web"],
-    "newArchEnabled": false,
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "plugins": [
       [
         "expo-camera",
@@ -21,7 +24,27 @@
           "photosPermission": "Allow SehatGemma to access your photos to analyze food images.",
           "cameraPermission": "Allow SehatGemma to access your camera to take food photos."
         }
+      ],
+      [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Allow SehatGemma to use your microphone for voice input.",
+          "speechRecognitionPermission": "Allow SehatGemma to use speech recognition for voice input."
+        }
       ]
-    ]
+    ],
+    "android": {
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.noman331.sehatgemma",
+      "usesCleartextTraffic": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "15c344a7-007f-4c4f-b912-7890314aad94"
+      }
+    }
   }
 }
