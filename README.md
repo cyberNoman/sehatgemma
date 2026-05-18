@@ -1,4 +1,4 @@
-# 🩺 SehatGemma — Offline Multimodal Diabetic Food Analyzer for Pakistan
+# 🩺 SehatGemma — Offline AI Diabetic Food Analyzer for Pakistan's 33 Million
 
 [![Gemma 4](https://img.shields.io/badge/Powered%20by-Gemma%204-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/gemma)
 [![Ollama](https://img.shields.io/badge/Local%20AI-Ollama-000000?style=for-the-badge&logo=ollama&logoColor=white)](https://ollama.com)
