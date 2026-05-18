@@ -5,7 +5,12 @@
 [![React Native](https://img.shields.io/badge/React%20Native-Expo-000020?style=for-the-badge&logo=expo&logoColor=white)](https://expo.dev)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 
-**Submission for Gemma 4 Good Hackathon (May 2026) — Health & Sciences + Ollama Local Ops + LiteRT AI Edge + Cactus Mobile tracks**
+> **Gemma 4 Good Hackathon (May 2026) — Health & Sciences · Ollama Local Ops · LiteRT AI Edge · Cactus Mobile**
+
+---
+
+> *"My father has Type 2 diabetes. At every family gathering, I watched him stare at the biryani and guess — is this safe? He was always wrong. SehatGemma was built so he, and Pakistan's 33 million diabetics, never have to guess again."*
+> — **Nouman Riaz, Builder**
 
 ---
 
@@ -30,15 +35,19 @@
 
 | Feature | Description |
 |---------|-------------|
-| 📸 **Multimodal Vision** | Snap a photo → Gemma 4 analyzes the food |
-| 🗣️ **Voice/Text Input** | Speak or type food name in Urdu/English |
-| 📊 **Risk Scoring** | Low/Medium/High with color coding |
-| 🔄 **Safe Swaps** | "Instead of biryani, eat cauliflower rice biryani" |
-| 🌐 **True Offline** | Works with zero internet via Ollama + local server |
-| 📱 **Low-End Phone Support** | SQLite fallback (101 foods, 200KB) for $50 Android phones |
-| 📈 **Weekly Insights** | Bilingual smart analytics tracking meal risk patterns |
-| 🎬 **Demo Mode** | One-tap 3-food showcase for judges and users |
-| 🔒 **Privacy Shield** | AES-256 encrypted, zero cloud sync, all data stays local |
+| 📸 **Multimodal Vision** | Snap a photo → Gemma 4 identifies food + full diabetes analysis |
+| 🎤 **Voice Input + TTS** | Speak food name → result read aloud in English or Urdu |
+| 💬 **AI Chat** | Conversational Gemma 4 — ask anything about food, glucose, diet |
+| 📋 **Menu Scanner** | Photo a restaurant menu → every item rated for diabetes risk |
+| 📊 **Risk Scoring** | Low / Medium / High with carbs, GI, calories, confidence score |
+| 🔄 **Safe Swaps** | Culturally appropriate Pakistani alternatives for every high-risk food |
+| 🌐 **True Offline** | Three-tier architecture — works with zero internet |
+| 📱 **$50 Phone Support** | 102-food SQLite database (200KB) for lowest-end Android phones |
+| 📈 **Weekly Insights** | Bilingual analytics tracking meal risk patterns over time |
+| 📡 **Live Status Dot** | Green = Gemma AI active · Orange = Offline DB mode |
+| 📤 **WhatsApp Share** | One tap shares bilingual health card to family WhatsApp group |
+| 🔒 **Privacy Shield** | Zero cloud sync · All data stays on device · Audit log |
+| 🎓 **Tutorial Carousel** | First-launch onboarding — explains the app in 3 slides |
 
 ---
 
@@ -46,15 +55,15 @@
 
 ```
 ┌─────────────────┐     WiFi/Hotspot      ┌─────────────────────────┐
-│  Patient Phone   │ ◄──────────────────► │   Edge Server (Pi 4)    │
+│  Patient Phone   │ ◄──────────────────► │   Edge Server           │
 │  React Native    │    No Internet       │   Ollama (port 11434)   │
-│  Expo Go         │    Needed            │   Gemma 4:2b (1.3B)    │
+│  Expo APK        │    Needed            │   Gemma 4:e2b (7.2GB)  │
 │                  │                      │   FastAPI (port 8001)   │
 └────────┬─────────┘                      └─────────────────────────┘
          │
          ▼ (True Offline — No Server)
 ┌─────────────────┐
-│   SQLite DB     │  101 Pakistani foods
+│   SQLite DB     │  102 Pakistani foods
 │   offlineDB.js  │  200KB, instant, $50 phone
 └─────────────────┘
 ```
@@ -63,90 +72,45 @@
 
 | Tier | Condition | Method | Speed | Hardware |
 |------|-----------|--------|-------|----------|
-| **Tier 1** | Phone alone, no server | SQLite database (101 foods) | Instant | $50 phone |
-| **Tier 2** | Phone + laptop WiFi | Ollama Gemma4:e2b (7.2GB) | 3-8 sec | Any phone + laptop |
-| **Tier 3** | Phone + Pi hotspot | Ollama Gemma4:2b (1.3B) | 3-5 sec | Any phone + Pi 4 ($75) |
+| **Tier 1** | Phone alone, no server | SQLite database (102 foods) | <100ms | $50 phone |
+| **Tier 2** | Phone + laptop WiFi | Ollama Gemma4:e2b (7.2GB) | 3-8 sec | Any laptop |
+| **Tier 3** | Phone + Pi hotspot | Ollama Gemma4:2b (1.3B) | 3-5 sec | Raspberry Pi 4 ($75) |
 
-**Tier 1 always runs first.** If the food is in the offline database, the user gets an answer in <100ms. If unknown, Tier 2/3 is tried. If no server available, the app shows "Unknown food — connect to SehatGemma hotspot for AI analysis."
+**Tier 1 always runs first.** If the food is in the offline database, the user gets an answer in <100ms. If unknown, Tier 2/3 is tried silently in the background.
 
 ---
 
 ## 🧠 How We Used Gemma 4
 
-### Model Selection: Why Gemma 4 2B?
+### Model Selection
 
-| Model | Size | RAM Needed | Quality | Verdict |
-|-------|------|------------|---------|---------|
-| Gemma 4:2b | 1.3B params | 4GB | Good for structured tasks | ✅ Selected (Pi 4) |
-| Gemma 4:4b | 2.6B params | 6GB | Better reasoning | ⚠️ Pi 4 borderline |
-| Gemma 4:9b | 5.8B params | 10GB | Excellent | ❌ Requires laptop |
-| Gemma 4:e2b | 4.6B params | 7GB | Very good | ✅ Selected (laptop) |
-
-We use **Gemma 4:e2b** on the developer laptop (7.2GB, fits in 8GB RAM with OS) and **Gemma 4:2b** targets the Raspberry Pi 4 (4GB) for rural clinic deployments.
+| Model | Size | RAM | Verdict |
+|-------|------|-----|---------|
+| Gemma 4:e2b | 4.6B params | 7.2GB | ✅ Laptop / demo device |
+| Gemma 4:2b | 1.3B params | 4GB | ✅ Raspberry Pi 4 target |
+| Gemma 4:e4b | 9.6B params | ~12GB | ⚠️ Laptop with 16GB+ |
 
 ### Three Gemma 4 Capabilities We Leverage
 
-1. **Multimodal Vision** — Analyzes food photos natively. No separate vision model needed. Base64-encoded image + text prompt → structured JSON analysis.
+1. **Multimodal Vision** — Food photos analyzed natively. Base64-encoded image + text prompt → structured JSON analysis. No separate vision model needed.
 
-2. **128K Context Window** — Holds our entire 3,000-token system prompt with 40+ Pakistani food profiles, PROMPT clinical guidelines, provincial prevalence data, and complication risk factors. This post-training domain adaptation via prompt engineering compensates for the smaller model size.
+2. **128K Context Window** — Holds our entire 3,000-token system prompt with 40+ Pakistani food profiles, PROMPT clinical guidelines, provincial prevalence data, and complication risk factors.
 
-3. **JSON Mode + Structured Output** — Forces Gemma 4 to return structured medical data (risk level, confidence, carbs, safe swaps in both languages), not prose. Critical for medical reliability.
+3. **Structured JSON Output** — `temperature: 0.1` forces deterministic, medically reliable responses with exact carb counts, GI values, and bilingual explanations.
 
-### System Prompt Engineering (The Secret Sauce)
+### Key Optimization: `think: False`
+Disables Gemma 4's internal reasoning chain — drops response time from **25 seconds → 3-5 seconds** with no quality loss for structured food analysis tasks.
 
-We don't just send "analyze this food." We inject a domain-specific knowledge base into every prompt:
+### Backend API Endpoints
 
-```python
-SYSTEM_PROMPT = """You are SehatGemma, an AI nutrition and diabetes assistant built for Pakistan. 
-You follow Pakistan's PROMPT national clinical guidelines.
-
-PAKISTAN DIABETES CONTEXT:
-- 33-36 million adults currently affected
-- 26.9-37.2% remain undiagnosed
-- 230,000 diabetes-related deaths annually
-
-PAKISTANI FOOD DATABASE (40+ foods with GI and risk profiles):
-- Biryani: GI 70, High risk. Safe swap: Cauliflower rice biryani.
-- Nihari: GI 15, Medium risk. Safe swap: Skip naan, use multigrain roti.
-- Gulab Jamun: GI 95, Extreme risk. Safe swap: None. ZERO for diabetics.
-... [40 foods total with glycemic index, risk level, safe swaps, portion advice]
-
-OUTPUT RULES:
-1. Always respond with structured JSON containing all fields
-2. Provide explanations in BOTH English and Urdu
-3. Give specific portion sizes in Pakistani measurements (cup, plate, bowl)
-4. Mention timing: "Glucose will spike within X minutes"
-5. Suggest culturally appropriate safe swaps
-6. Never give medical prescriptions, only dietary guidance
-```
-
-### Multimodal Pipeline
-
-```python
-@app.post("/analyze")
-async def analyze(file: UploadFile, text: str, language: str):
-    # 1. If image provided, encode as base64
-    img_b64 = base64.b64encode(await file.read()).decode() if file else None
-    
-    # 2. Build prompt with context
-    user_prompt = f"Language: {language}. User said: {text}. "
-    
-    # 3. Send to Gemma 4 with system prompt
-    payload = {
-        "model": "gemma4:e2b",
-        "prompt": user_prompt,
-        "system": SYSTEM_PROMPT,  # 3K tokens of Pakistani food knowledge
-        "stream": False,
-        "think": False,  # Kills 20s reasoning delay
-        "options": {"temperature": 0.1, "num_predict": 500}
-    }
-    if img_b64:
-        payload["images"] = [img_b64]
-    
-    # 4. Call Ollama API locally
-    resp = await httpx.post("http://localhost:11434/api/generate", json=payload)
-    return clean_json_response(resp.json()["response"])
-```
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/analyze` | POST | Food photo or text → full diabetes risk analysis |
+| `/chat` | POST | Multi-turn conversational Gemma 4 (bilingual) |
+| `/scan-menu` | POST | Restaurant menu photo → item-by-item risk rating |
+| `/glucose-history` | GET | Retrieve saved glucose readings |
+| `/weekly-report` | GET | Aggregated meal risk + glucose trend data |
+| `/health` | GET | Backend status check |
 
 ---
 
@@ -156,143 +120,120 @@ async def analyze(file: UploadFile, text: str, language: str):
 - **Node.js 18+** and **npm**
 - **Python 3.10+** with pip
 - **Ollama** installed ([ollama.com](https://ollama.com))
-- **Expo Go** app on phone (iOS/Android)
+- **Android phone** with the SehatGemma APK installed
 
-### Option 1: Full Offline (Raspberry Pi 4 — Rural Clinics)
-
-```bash
-# On Raspberry Pi 4 (4GB)
-curl -fsSL https://ollama.com/install.sh | sh
-ollama pull gemma4:2b
-
-git clone https://github.com/cyberNoman/sehatgemma.git
-cd sehatgemma/backend
-pip install fastapi uvicorn httpx python-multipart
-uvicorn main:app --host 0.0.0.0 --port 8001
-
-# Pi creates WiFi hotspot automatically (optional)
-# Phone connects to "SehatGemma-Offline" WiFi
-# Opens Expo Go → scans QR → instant offline AI analysis
-```
-
-### Option 2: Development (Laptop)
+### Setup
 
 ```bash
-# Terminal 1: Pull and verify Ollama model
+# 1. Pull the model
 ollama pull gemma4:e2b
-ollama list  # Should show gemma4:e2b
 
-# Terminal 2: Start backend
+# 2. Start backend (Terminal 1)
 cd sehatgemma/backend
 pip install fastapi uvicorn httpx python-multipart
 uvicorn main:app --host 0.0.0.0 --port 8001 --reload
 
-# Terminal 3: Start frontend
+# 3. Start frontend dev server (Terminal 2)
 cd sehatgemma/app
 npm install
-npx expo start --web
+npx expo start --offline
 
-# Open http://localhost:8081 in browser
-# OR scan QR code with Expo Go on phone
+# 4. Update your WiFi IP in app/App.js line 18:
+#    'http://YOUR_LAPTOP_IP:8001'
+#    Find your IP with: ipconfig (Windows) or ifconfig (Mac/Linux)
 ```
 
 ### Verify Everything Works
 
 ```bash
-# Backend health check
+# Health check
 curl http://localhost:8001/health
 # → {"status":"ok","model":"gemma4:e2b","timestamp":"..."}
 
-# Test analysis
+# Text analysis
 curl -X POST http://localhost:8001/analyze \
-  -F "text=biryani" \
-  -F "language=en"
-# → Full JSON with risk, explanation, safe swap, carbs, calories
+  -F "text=biryani" -F "language=en"
+# → {"food_name_en":"Biryani","sugar_risk":"high","carbs_g":80,"confidence":95,...}
+
+# Chat
+curl -X POST http://localhost:8001/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message":"is roti better than naan?","language":"en"}'
+# → {"response_en":"Yes, roti is much better...","response_ur":"..."}
 ```
 
 ---
 
-## 📱 Usage
+## 📱 App Screens (12 Total)
 
-1. **Open the app** → Accept medical disclaimer
-2. **Take photo** of food OR **type/speak** food name
-3. **Get instant analysis**: Risk level, Urdu explanation, safe swap, carbs, calories
-4. **Track glucose** in the Sugar Logbook with trend charts
-5. **View weekly insights** showing meal patterns and risk distribution
-6. **Privacy Shield** shows all data stays local — zero cloud sync
-
-### Demo Mode (For Judges & New Users)
-Tap **"Quick Demo / فوری ڈیمو"** on the home screen to watch 3 pre-scripted analyses in 4.2 seconds:
-1. 🍛 **Biryani** → HIGH risk → "Swap to cauliflower rice"
-2. 🌿 **Saag + Makai Roti** → LOW risk → "Already optimal"
-3. 🍬 **Gulab Jamun** → HIGH risk → "ZERO for diabetics"
+| Screen | Purpose |
+|--------|---------|
+| **Tutorial** | First-launch 3-slide onboarding carousel |
+| **Disclaimer** | Medical disclaimer (required) |
+| **Home** | Main hub — camera, gallery, voice, menu scan, emergency |
+| **Loading** | Animated "Gemma is thinking..." with pulsing AI brain |
+| **Result** | Full analysis — risk badge, explanation (EN+UR), safe swap, TTS button |
+| **Voice Input** | Type or speak food name — chips for common queries — auto-analyzes |
+| **Chat** | Conversational Gemma 4 — multi-turn, bilingual, emergency detection |
+| **Menu Scanner** | Camera → restaurant menu → all items rated with risk colors |
+| **Glucose Log** | Manual glucose entry + history chart |
+| **History** | All past food analyses with timestamps |
+| **How It Helps** | Educational screen — 8 benefits explained |
+| **Privacy Shield** | Data transparency — what's stored, where, audit log |
+| **Emergency** | One-tap emergency contact + nearest hospitals (Aga Khan, Jinnah, DHQ) |
 
 ---
 
-## 📊 Offline Database — 101 Pakistani Foods
+## 📊 Offline Database — 102 Pakistani Foods
 
 | Category | Count | Examples |
-|----------|-------|----------|
-| **Meat** | 15 | Karahi, Qorma, Tikka Boti, Malai Boti, Grilled Fish, Seekh Kebab, Tandoori Chicken |
-| **Fruit** | 12 | Guava (GI 12 — lowest), Apple, Pomegranate, Papaya, Banana, Watermelon |
-| **Vegetables** | 12 | Bhindi, Baingan, Karela, Palak, Aloo Gobi, Shaljam, Tinde, Salad |
-| **Dessert** | 11 | Jalebi, Barfi, Shahi Tukra, Sevaiyan, Falooda, Gajar Halwa, Ras Malai |
-| **Herbs** | 9 | Cinnamon (reduces glucose 18-29%), Turmeric, Garlic, Ginger, Almonds, Walnuts |
-| **Drink** | 8 | Green Tea, Lemon Water, Chicken Corn Soup, Cold Drink (NEVER) |
-| **Snack** | 8 | Chaat, Kebab Roll, Qatlam, Bun Kebab, Samosa, Pakora |
-| **Lentils** | 7 | Chana Dal (GI 8 — lowest), Lobia, Chana Masala, Daal |
-| **Rice** | 6 | Brown Rice, Matar Pulao, Mutton Pulao, Biryani |
-| **Bread** | 5 | Roghni Naan, Qatlam, Anda Paratha, Chapati/Roti |
-| **Breakfast** | 5 | Halwa Puri, Daliya, Oats, Eggs, Anda Paratha |
+|----------|-------|---------|
+| **Meat** | 15 | Karahi, Qorma, Tikka Boti, Seekh Kebab, Tandoori Chicken |
+| **Fruit** | 12 | Guava (GI 12), Apple, Pomegranate, Papaya, Banana |
+| **Vegetables** | 12 | Bhindi, Baingan, Karela, Palak, Aloo Gobi, Shaljam |
+| **Dessert** | 12 | Jalebi, Barfi, Gulab Jamun, Cake/Pastry, Ras Malai |
+| **Herbs** | 9 | Cinnamon (reduces glucose 18-29%), Turmeric, Garlic |
+| **Drinks** | 8 | Green Tea, Lemon Water, Rooh Afza (NEVER), Doodh Patti |
+| **Snacks** | 8 | Chaat, Samosa, Pakora, Bun Kebab |
+| **Lentils** | 7 | Chana Dal (GI 8), Lobia, Haleem, Moong Dal |
+| **Rice** | 6 | Brown Rice, Biryani, Matar Pulao, Nihari |
+| **Bread** | 5 | Roti/Chapati, Naan, Paratha, Makai Roti |
+| **Breakfast** | 5 | Halwa Puri, Daliya, Oats, Eggs |
 | **Dairy** | 3 | Dahi, Paneer, Raita |
-| **TOTAL** | **101** | Every major Pakistani food covered |
+| **TOTAL** | **102** | Every major Pakistani food covered |
 
-Each food includes: risk level, glycemic index, bilingual explanation, safe swap, portion advice, carbs (grams), and calorie estimate.
+Each food entry includes: risk level, glycemic index, bilingual explanation (EN + UR), safe swap, portion advice, carbs (grams), calorie estimate, and fuzzy search aliases.
 
 ---
 
-## 🏆 Hackathon Tracks
+## 🧪 Verified Working
 
-This project qualifies for **5 prize tracks** in the Gemma 4 Good Hackathon:
+| Test | Status |
+|------|--------|
+| `GET /health` | ✅ |
+| `POST /analyze` text — biryani → HIGH, 80g carbs, 95% conf | ✅ |
+| `POST /analyze` text — karela → LOW, 4g carbs, 95% conf | ✅ |
+| `POST /analyze` image — food photo → real JSON (not fallback) | ✅ |
+| `POST /chat` — conversational Gemma 4 response | ✅ |
+| `POST /scan-menu` — menu photo → items list with risk | ✅ |
+| Phone → Backend (WiFi LAN) — 200 OK from phone IP | ✅ |
+| Offline DB — known food instant result | ✅ |
+| TTS — results read aloud in English + Urdu | ✅ |
+| Voice input → chip → auto-analyze in 300ms | ✅ |
+| WhatsApp share — bilingual health card | ✅ |
+| Language toggle — English ↔ Urdu all screens | ✅ |
 
-| Track | Prize | Why We Win |
-|-------|-------|-------------|
-| **Main Track** | $50,000 | Real problem (33M diabetics), real demo, real impact |
-| **Health & Sciences** | $10,000 | Frontline diabetic health tool for Pakistan |
+---
+
+## 🏆 Hackathon Prize Tracks
+
+| Track | Prize | Why |
+|-------|-------|-----|
+| **Main Track** | $50,000 | Real problem · real demo · real 33M person impact |
+| **Health & Sciences** | $10,000 | Frontline diabetic health tool, PROMPT clinical guidelines |
 | **Ollama Local Ops** | $10,000 | Built entirely on Ollama + Gemma 4 local deployment |
-| **LiteRT AI Edge** | $10,000 | Edge-first architecture, true offline capability |
-| **Cactus Mobile** | $10,000 | React Native + Expo cross-platform mobile app |
-
-**Total potential: $80,000+**
-
----
-
-## 🎬 Demo Video Script (3 Minutes)
-
-| Time | Scene | Script |
-|------|-------|--------|
-| 0:00-0:15 | Hook — Problem | "In Pakistan, 33 million people have diabetes. Most don't even know it. And when Eid comes, every grandmother serves biryani. But for a diabetic, one plate of biryani is a glucose bomb." |
-| 0:15-0:30 | Show the pain | "Existing apps need internet. Need cloud. Need English. Need money. My aunt in a village has none of these." |
-| 0:30-0:45 | Introduce solution | "So we built SehatGemma. Powered by Google's Gemma 4. Running entirely offline." |
-| 0:45-1:15 | **THE WOW MOMENT** — Offline demo | Turn off WiFi. Show airplane mode. Open browser — google.com fails. Open SehatGemma app. Tap Demo Mode → 3 foods analyzed in real-time. Biryani: HIGH. Saag: LOW. Gulab Jamun: HIGH. |
-| 1:15-1:45 | Show the "brain" | "How? This Raspberry Pi in my pocket. $75. Running Gemma 4 2B via Ollama. Creates its own WiFi hotspot. Phone connects directly. No router. No internet. No cloud bill." |
-| 1:45-2:15 | Show fallback | "No Pi? No problem. 101 Pakistani foods pre-loaded. Instant answer. Zero server needed. Works on a $50 phone." |
-| 2:15-2:45 | Show multimodal | "Type 'gulab jamun.' Voice 'samosa.' Photo of haleem. All analyzed. All in Urdu. All offline." |
-| 2:45-3:00 | Close with vision | "SehatGemma. Because good health shouldn't need good internet. Built with Gemma 4. For Pakistan. For every diabetic who deserves to know what they're eating." |
-
----
-
-## 🔧 Tech Stack
-
-| Layer | Technology | Why |
-|-------|-----------|-----|
-| **Frontend** | React Native + Expo | Cross-platform (iOS/Android/Web), works on $50 phones |
-| **AI Engine** | Ollama + Gemma 4 | Local LLM deployment, no cloud dependencies |
-| **Backend** | FastAPI + Uvicorn | Async, lightweight, handles multipart uploads |
-| **Edge Hardware** | Raspberry Pi 4 (4GB) or laptop | $75 rural clinic server |
-| **Offline DB** | JavaScript Search Engine | 101 foods, 7-tier fuzzy search, 200KB, instant |
-| **Storage** | AsyncStorage | Local key-value, AES-256 encrypted |
-| **Languages** | English + Urdu | Bilingual by design — every label, explanation, UI element |
+| **LiteRT AI Edge** | $10,000 | Edge-first, true offline, $75 Pi 4 deployment |
+| **Cactus Mobile** | $10,000 | React Native + Expo, APK built and tested |
 
 ---
 
@@ -301,74 +242,79 @@ This project qualifies for **5 prize tracks** in the Gemma 4 Good Hackathon:
 ```
 sehatgemma/
 ├── app/
-│   ├── App.js                  # Main React Native app (all screens + components)
-│   ├── offlineDatabase.js      # 101 Pakistani foods, 7-tier search engine
-│   ├── app.json                # Expo configuration
-│   └── package.json            # Frontend dependencies
+│   ├── App.js              # Full app — 12 screens, all components (~2200 lines)
+│   ├── offlineDatabase.js  # 102 Pakistani foods, 7-tier fuzzy search engine
+│   ├── app.json            # Expo config — permissions, usesCleartextTraffic
+│   ├── eas.json            # EAS build profiles (preview APK)
+│   └── package.json        # Dependencies incl. expo-speech, expo-speech-recognition
 ├── backend/
-│   ├── main.py                 # FastAPI server, Ollama integration, SQLite DB
-│   ├── sehatgemma.db           # SQLite database (meal logs, glucose logs)
-│   └── requirements.txt        # Python dependencies
-├── SehatGemma_AI_MEMORY/
-│   └── _AI_MEMORY/
-│       ├── HANDOFF.md          # Developer handoff document
-│       ├── AGENT_ROLES.md      # Agent role definitions
-│       ├── DEEPSEEK_TASK.md    # Original task specification
-│       └── CURRENT_STATUS.md   # Project status tracker
-└── README.md                   # This file
+│   ├── main.py             # FastAPI — /analyze /chat /scan-menu /health (~550 lines)
+│   └── requirements.txt    # Python dependencies
+└── README.md
 ```
 
 ---
 
-## 🧪 Verified Working
+## 🔧 Tech Stack
 
-| Test | Status | Details |
-|------|--------|---------|
-| `GET /health` | ✅ | `{"status":"ok","model":"gemma4:e2b"}` |
-| `POST /analyze` (text) | ✅ | Full JSON: risk, explanation, safe swap, carbs, calories |
-| `POST /analyze` (image) | ✅ | Multimodal vision → food identification + analysis |
-| Phone → Backend (WiFi LAN) | ✅ | 4 consecutive 200 OK from phone IP |
-| Offline DB — known food | ✅ | "biryani" → instant HIGH risk result |
-| Offline DB — unknown food | ✅ | "sushi" → "not in Pakistani database" |
-| Offline DB — all 101 foods | ✅ | 12 categories verified, all searchable |
-| Demo Mode | ✅ | 3 foods in 4.2 seconds, zero typing |
-| Weekly Insights | ✅ | Bilingual, color-coded HIGH/MED/LOW counts |
-| Bottom Nav | ✅ | Voice, Camera, Chat, Health all functional |
-| Language Toggle | ✅ | English ↔ Urdu, all screens, all content |
+| Layer | Technology |
+|-------|-----------|
+| **Frontend** | React Native + Expo SDK 54 |
+| **AI Engine** | Ollama + Gemma 4 (gemma4:e2b) |
+| **Backend** | FastAPI + Uvicorn + httpx (async, persistent client) |
+| **Offline DB** | JavaScript fuzzy search — 102 foods, 200KB |
+| **TTS** | expo-speech — reads results in English + Urdu |
+| **Voice Input** | expo-speech-recognition — native STT |
+| **Storage** | AsyncStorage (local, zero cloud) |
+| **Languages** | English + Urdu — every label, explanation, UI element |
 
 ---
 
-## ⚠️ Known Limitations
+## ⚠️ Setup Notes
 
-1. **True independence requires Pi 4 or laptop** — The 7.2GB LLM cannot run on a phone. Tier 1 (SQLite) provides offline coverage for 101 foods. For unknown foods, a local server is needed.
+1. **WiFi IP** — Update `BACKEND_URL` in `app/App.js` line 18 to your laptop's local WiFi IP. Find it with `ipconfig` on Windows.
 
-2. **IP address changes** — If laptop WiFi IP changes from `192.168.1.241`, update `BACKEND_URL` in `app/App.js` line 17.
+2. **Windows Firewall** — Allow port 8001 inbound:
+   ```powershell
+   New-NetFirewallRule -DisplayName "SehatGemma" -Direction Inbound -Protocol TCP -LocalPort 8001 -Action Allow
+   ```
 
-3. **Windows Firewall** — May block port 8001. Run `New-NetFirewallRule -DisplayName "SehatGemma8001" -Direction Inbound -Protocol TCP -LocalPort 8001 -Action Allow` as Admin.
+3. **Same network** — Phone and laptop must be on the same WiFi for backend connection.
 
-4. **Gemma 4 2B quality** — Smaller model has reduced reasoning depth. System prompt engineering compensates with domain-specific knowledge injection.
+4. **Offline mode** — If no backend, app uses 102-food local database automatically.
 
 ---
 
+<<<<<<< HEAD
 ## 🤝 Team
  👤 **Developer:** Noman — Solo builder, Pakistan
      Cybersecurity + AI background.
+=======
+## 🤝 Builder
+
+**Nouman Riaz** — MSc Cybersecurity · Founder, AGENATION.IO · Pakistan  
+Solo build. Father has Type 2 diabetes. This project is personal.
+>>>>>>> e808b43 (docs: personal story, 12 screens, new features, voice/chat/menu scanner, 102 foods)
 
 ---
 
 ## 📜 License
 
-MIT — Free for clinics, hospitals, and personal use. Commercial licensing available.
+MIT — Free for clinics, hospitals, NGOs, and personal use.
 
 ---
 
 ## 🙏 Acknowledgments
 
-- **Google Gemma 4** — For making capable, open-weight LLMs accessible for healthcare
-- **Ollama** — For zero-config local LLM deployment
+- **Google Gemma 4** — Open-weight multimodal LLM that makes this possible
+- **Ollama** — Zero-config local LLM deployment
 - **Pakistan PROMPT Guidelines** — National clinical standards for diabetes care
-- **IDF/WHO 2024-2025** — Diabetes prevalence data that guides our impact metrics
+- **IDF/WHO 2024-2025** — Epidemiology data behind our impact metrics
 
 ---
 
+<<<<<<< HEAD
 *Built with ❤️ for Pakistan. Because 33 million diabetics deserve to know what they're eating — with or without internet.*
+=======
+*Built for Pakistan. Because 33 million diabetics deserve to know what they're eating — with or without internet.*
+>>>>>>> e808b43 (docs: personal story, 12 screens, new features, voice/chat/menu scanner, 102 foods)
