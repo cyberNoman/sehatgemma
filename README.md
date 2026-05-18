@@ -93,11 +93,9 @@
 
 ### Model Selection
 
-| Model | Size | RAM | Verdict |
-|-------|------|-----|---------|
-| Gemma 4:e2b | 4.6B params | 7.2GB | ✅ Laptop / demo device |
-| Gemma 4:2b | 1.3B params | 4GB | ✅ Raspberry Pi 4 target |
-| Gemma 4:e4b | 9.6B params | ~12GB | ⚠️ Laptop with 16GB+ |
+**Model used: `gemma4:e2b`** — 4.6B params, 7.2GB RAM, running locally via Ollama on laptop.
+
+The architecture is designed to also support `gemma4:2b` on a Raspberry Pi 4 (4GB RAM) for rural clinic deployment — same codebase, just change the `MODEL` constant in `main.py`.
 
 ### Three Gemma 4 Capabilities We Leverage
 
